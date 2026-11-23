@@ -1,0 +1,24 @@
+{
+  "api_url": "https://electricity-api-production-e75c466f.up.railway.app",
+  "checks": [
+    "MySQL-backed health check",
+    "Frontend CORS preflight",
+    "Registration and JWT login",
+    "365-row CSV import, duplicate rejection and account isolation",
+    "Monthly analytics and billing estimate",
+    "Random Forest training and persisted model loading",
+    "Anomaly detection and appliance create/delete",
+    "Analytical report download",
+    "Admin access protection"
+  ],
+  "metrics_on_synthetic_sample": {
+    "mae": 1.0331370254629628,
+    "rmse": 1.2113187074294622,
+    "mape": 13.637313578313051,
+    "test_days": 72,
+    "test_calendar_days": 72,
+    "train_days": 286,
+    "mape_excluded_zero_days": 0
+  },
+  "status": "passed"
+}

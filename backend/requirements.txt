@@ -1,0 +1,16 @@
+fastapi>=0.115,<1
+uvicorn[standard]>=0.34,<1
+sqlalchemy>=2.0,<3
+pymysql>=1.1,<2
+cryptography>=44
+pydantic-settings>=2.7,<3
+email-validator>=2.2,<3
+PyJWT>=2.10,<3
+pwdlib[argon2]>=0.2,<1
+python-multipart>=0.0.20
+pandas>=2.2,<4
+numpy>=2.2,<3
+scikit-learn>=1.6,<2
+joblib>=1.4,<2
+pytest>=8,<10
+httpx>=0.28,<1

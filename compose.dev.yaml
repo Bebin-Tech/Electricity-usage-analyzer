@@ -1,0 +1,5 @@
+# Optional database-only port for running FastAPI directly on Windows.
+services:
+  db:
+    ports:
+      - "127.0.0.1:3307:3306"
