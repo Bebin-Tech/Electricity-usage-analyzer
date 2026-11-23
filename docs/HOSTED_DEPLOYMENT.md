@@ -1,6 +1,6 @@
 # Hosted deployment — 23 November 2026
 
-The frontend is deployed to Vercel and connected to the FastAPI API on Railway. MySQL runs on Railway's private network with persistent storage.
+The frontend is deployed to Vercel and connected to the FastAPI API on Railway. MySQL runs on Railway's private network with persistent storage. Source is published at [Bebin-Tech/Electricity-usage-analyzer](https://github.com/Bebin-Tech/Electricity-usage-analyzer).
 
 | Component | Deployment |
 | --- | --- |
@@ -9,14 +9,28 @@ The frontend is deployed to Vercel and connected to the FastAPI API on Railway. 
 | API health | https://electricity-api-production-e75c466f.up.railway.app/api/health |
 | Vercel team | bebin-dotms-projects |
 | Vercel project ID | prj_dlcSgObueagPuTQnl0LmkISne8vu |
-| Connected frontend deployment | dpl_9Unq4KkLPkyfBRs1JWYte5wga826 — production, READY |
+| Verified Git-triggered frontend deployment | dpl_BLts1nxRuofdQaYC4mGd3WTmZMbb — production, READY |
 | Railway project ID | 648857c3-da32-46fb-acc8-4b99012e7b4a |
 | Railway production environment | cbc29811-16c4-4f02-8eb0-8b6cd5042fb1 |
 | Railway API service ID | 0ad790f4-d74f-4725-8610-b2144af67c0a |
 | Railway API deployment | d53de55b-77cb-472c-9580-d625bfe60501 — SUCCESS |
 | Railway MySQL service ID | 2b861c7f-f308-4ca7-a423-2308aa85aa1a |
 
-No Git repository was present. Deployments used the actual local source files. Frontend source SHA-256: `5ca86bf78eb4f0e89c71c008c4d3284ce4357244171e3c15501a0b3671c9ffe5`. Backend runtime source SHA-256: `2e919cdb3df117258de46fdc6d5dce9c1e8fbf567dcbcbdb9dfa35a09692de3a`.
+The initial deployments used local source files before the repository existed. Initial frontend source SHA-256: `5ca86bf78eb4f0e89c71c008c4d3284ce4357244171e3c15501a0b3671c9ffe5`. Initial backend runtime source SHA-256: `2e919cdb3df117258de46fdc6d5dce9c1e8fbf567dcbcbdb9dfa35a09692de3a`. Subsequent frontend deployments now come from GitHub.
+
+## Automatic deployment status
+
+| Service | Git branch | Build root | Status |
+| --- | --- | --- | --- |
+| Vercel frontend | `main` | `frontend` | Connected; a real push produced a READY production deployment |
+| Railway API | intended `main` | `/backend` | Root and Dockerfile configured; GitHub repository access must be granted before source connection can complete |
+| Railway MySQL | Not a Git service | Persistent database template | Independent of code pushes |
+
+Vercel's Git connection was verified to point to `Bebin-Tech/Electricity-usage-analyzer` with production branch `main`. Pushing commit `fbdbbecd8d456c0969d19fcfde14e414d8fcc83e` automatically produced the READY deployment above. No manual Vercel deployment command was used for that verification.
+
+Railway currently rejects the GitHub source connection with `User does not have access to the repo`. In GitHub Settings → Applications → Installed GitHub Apps, configure Railway to permit this specific repository. If the app is absent, connect GitHub in Railway Account Settings first. After access is granted, connect the existing `electricity-api` service to this repository's `main` branch. Do not create a replacement service or database.
+
+The repository's About/website field and README both link to the live Vercel application. Hosting settings and secret values remain outside Git.
 
 ## Configuration
 
@@ -44,6 +58,8 @@ Automated approval review initially rejected a temporary SSH credential and reje
 
 ## Redeployment
 
-For the backend, `python scripts/prepare_backend_deployment.py` stages only runtime files in ignored `.deploy/railway-api`. It refuses unexpected staged files and excludes `.env`, datasets, local databases and model artifacts. Deploy that directory through the Railway CLI using `--path-as-root` and the explicit project, environment and service IDs above. Do not deploy the whole workspace.
+For the backend, the intended workflow is a GitHub push to `main` after Railway repository access is granted. Railway is configured to build `/backend` using its Dockerfile. Keep database and model volumes attached to the existing service.
 
-For the frontend, deploy `frontend/` to the existing Vercel project. Its `vercel.json` declares the Vite build. Environment changes require a fresh Vercel build. This checkout is not connected to Git autodeploys.
+For the frontend, push to `main`; Vercel automatically builds `frontend/` using its `vercel.json`. Environment changes require a fresh Vercel build.
+
+The original `scripts/prepare_backend_deployment.py` remains available for a manual runtime-only archive. It stages a flat backend directory, so that fallback requires a matching service root directory rather than the Git monorepo root `/backend`. It excludes `.env`, datasets, local databases and model artifacts. Do not upload the whole working directory, which contains local secrets and generated files.
