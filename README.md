@@ -1,10 +1,14 @@
 # Electricity Usage Analyzer
 
+[![Live application](https://img.shields.io/badge/Live_application-Open_Voltwise-22785a?style=for-the-badge)](https://electricity-usage-analyzer.vercel.app)
+
+[Open the live application](https://electricity-usage-analyzer.vercel.app) · [API documentation](https://electricity-api-production-e75c466f.up.railway.app/docs)
+
 **AI-Based Electricity Consumption Analysis and Prediction System** — an intermediate final-year academic project. Voltwise is the interface name.
 
 React + Vite · FastAPI · MySQL · SQLAlchemy · scikit-learn · Pandas · NumPy · Recharts · JWT / Argon2.
 
-**Hosted application:** https://electricity-usage-analyzer.vercel.app — frontend on Vercel, FastAPI and MySQL on Railway. See `docs/HOSTED_DEPLOYMENT.md` for live verification, configuration and redeployment details.
+**Hosted application:** [electricity-usage-analyzer.vercel.app](https://electricity-usage-analyzer.vercel.app) — frontend on Vercel, FastAPI and MySQL on Railway. See `docs/HOSTED_DEPLOYMENT.md` for live verification, configuration and redeployment details.
 
 Implemented and tested locally. See `docs/VERIFICATION.md` for actual results and remaining browser/deployment verification limits. The included `backend/requirements-lock.txt` records the tested Python package versions; `frontend/package-lock.json` records frontend versions.
 
